@@ -11,6 +11,10 @@ TEAL = (3, 240, 252)
 RED = (252, 3, 3)
 WHITE = (255, 255, 255)
 
+#create tone for ball
+pong_sound = pygame.mixer.Sound('pong_blip.wav')
+#score point
+score_sound = pygame.mixer.Sound('Funk.wav')
 #open new window
 size = (700, 500)
 screen = pygame.display.set_mode(size)
@@ -70,9 +74,11 @@ while carryOn:
     #Check if the ballis bouncing against any of the 4 walls
     if ball.rect.x>=690:
         scoreA +=1
+        pygame.mixer.Sound.play(score_sound)
         ball.velocity[0] = -ball.velocity[0]
     if ball.rect.x<=0:
         scoreB +=1
+        pygame.mixer.Sound.play(score_sound)
         ball.velocity[0] = -ball.velocity[0]
     if ball.rect.y>490:
         ball.velocity[1] = -ball.velocity[1]
@@ -81,11 +87,12 @@ while carryOn:
     
     #Detect collection between ball and paddle and random bounce if off either positive or negative direction points
     if pygame.sprite.collide_mask(ball, paddleA) or pygame.sprite.collide_mask(ball, paddleB):
+        pygame.mixer.Sound.play(pong_sound)
         ball.bounce()
 
 
     #--- Drawing code should go here ----
-    #clear the screen as black 
+    #clear the screen -----black 
     screen.fill(BLACK)
     #draw the net in the middle
     pygame.draw.line(screen, WHITE, [349, 0], [349, 500], 8) #[Start X, Start point y], [End X, End Y point]
