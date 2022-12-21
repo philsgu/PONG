@@ -41,8 +41,25 @@ all_sprite_list.add(paddleA)
 all_sprite_list.add(paddleB)
 all_sprite_list.add(ball)
 
-#menu option 
+#pause game
+# def pause():
+#     loop = 1
 
+#     write("PAUSED", 500, 150)
+#     write("Press Space to continue", 500, 250)
+#     while loop:
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 loop = 0
+#             if event.type == pygame.KEYDOWN:
+#                 if event.key == pygame.K_ESCAPE:
+#                     loop = 0
+#                 if event.key == pygame.K_SPACE:
+#                     screen.fill((0, 0, 0))
+#                     loop = 0
+#         pygame.display.update()
+#         # screen.fill((0, 0, 0))
+#         clock.tick(60)
 
 def play_game():
     #the loop will carry on for refresh screen
@@ -124,6 +141,8 @@ def play_game():
 menu = pygame_menu.Menu("Phil's Pong", 400, 300)
 menu.add.button('Play', play_game)
 menu.add.button('Quit', pygame_menu.events.EXIT)
+menu.add.label("Player Left Keys: W/S", font_size=14)
+menu.add.label("Player Right Keys: UP/DOWN", font_size=14)
 menu.mainloop(screen)
 #Once we have wcited the main program loop, we can stop the game engine:
 pygame.quit()
