@@ -41,32 +41,31 @@ all_sprite_list.add(paddleA)
 all_sprite_list.add(paddleB)
 all_sprite_list.add(ball)
 
+#clock is import to control how fast the screen updates
+clock = pygame.time.Clock()
 #pause game
-# def pause():
-#     loop = 1
+def pause():
+    loop = 1
 
-#     write("PAUSED", 500, 150)
-#     write("Press Space to continue", 500, 250)
-#     while loop:
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 loop = 0
-#             if event.type == pygame.KEYDOWN:
-#                 if event.key == pygame.K_ESCAPE:
-#                     loop = 0
-#                 if event.key == pygame.K_SPACE:
-#                     screen.fill((0, 0, 0))
-#                     loop = 0
-#         pygame.display.update()
-#         # screen.fill((0, 0, 0))
-#         clock.tick(60)
+    screen.blit("PAUSED", 500, 150)
+    screen.blit("Press Space to continue", 500, 250)
+    while loop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                loop = 0
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    loop = 0
+                if event.key == pygame.K_SPACE:
+                    screen.fill((0, 0, 0))
+                    loop = 0
+        pygame.display.update()
+        # screen.fill((0, 0, 0))
+        clock.tick(60)
 
 def play_game():
     #the loop will carry on for refresh screen
     carryOn = True
-
-    #clock is import to control how fast the screen updates
-    clock = pygame.time.Clock()
 
     #Initialize player score
     scoreA = 0
@@ -77,6 +76,7 @@ def play_game():
         for event in pygame.event.get(): #user did something
             if event.type == pygame.QUIT: #if user clicked close/QUIT window
                 carryOn = False
+    
 
         #Moving the paddles when the user uses the arrow keys (player A) or W/S keys (player B)
         keys= pygame.key.get_pressed()
