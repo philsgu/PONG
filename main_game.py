@@ -43,22 +43,31 @@ all_sprite_list.add(ball)
 
 #clock is import to control how fast the screen updates
 clock = pygame.time.Clock()
+
+
+
 #pause game
 def pause():
     loop = 1
-
-    screen.blit("PAUSED", 500, 150)
-    screen.blit("Press Space to continue", 500, 250)
+    #activate key methods
+    
+    # screen.blit("PAUSED", 500, 150)
+    # screen.blit("Press Space to continue", 500, 250)
     while loop:
+        keys = pygame.key.get_pressed()
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            # if event.type == pygame.KEYDOWN:
+            #     if keys[pygame.K_ESCAPE]:
+            #         menu_options(resume=True)
+            #         loop = 0 
+            #     loop = 0
+            
+            #     if keys[pygame.K_ESCAPE]:
+            #         loop = 0
+            if keys[pygame.K_SPACE]:
+            #screen.fill((0, 0, 0))
                 loop = 0
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    loop = 0
-                if event.key == pygame.K_SPACE:
-                    screen.fill((0, 0, 0))
-                    loop = 0
+                    
         pygame.display.update()
         # screen.fill((0, 0, 0))
         clock.tick(60)
@@ -66,6 +75,8 @@ def pause():
 def play_game():
     #the loop will carry on for refresh screen
     carryOn = True
+    #activate key methods
+    keys = pygame.key.get_pressed()
 
     #Initialize player score
     scoreA = 0
@@ -74,12 +85,18 @@ def play_game():
     while carryOn:
         #--- Main event loop ----
         for event in pygame.event.get(): #user did something
-            if event.type == pygame.QUIT: #if user clicked close/QUIT window
-                carryOn = False
+            # if event.type == pygame.QUIT: #if user clicked close/QUIT window
+            #     carryOn = False
+            if keys[pygame.K_SPACE]:
+                pause()
+            if keys[pygame.K_ESCAPE] or event.type == pygame.QUIT:
+                menu_options(resume=True)
+                
+
     
 
         #Moving the paddles when the user uses the arrow keys (player A) or W/S keys (player B)
-        keys= pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
             paddleA.moveUp(10)
         if keys[pygame.K_s]:
@@ -136,13 +153,23 @@ def play_game():
         #--- Limit to 60 frames per second
         clock.tick(60)
 
-#play_game()
-#create a menu prior to entry to play game mode
-menu = pygame_menu.Menu("Phil's Pong", 400, 300)
-menu.add.button('Play', play_game)
-menu.add.button('Quit', pygame_menu.events.EXIT)
-menu.add.label("Player Left Keys: W/S", font_size=14)
-menu.add.label("Player Right Keys: UP/DOWN", font_size=14)
-menu.mainloop(screen)
-#Once we have wcited the main program loop, we can stop the game engine:
+# play_game()
+# create a menu prior to entry to play game mode
+def menu_options(resume=False):
+    if resume:
+        menu = pygame_menu.Menu("Phil's Pong", 400, 300)
+        menu.add.button('Restart', play_game)
+        menu.add.button('Quit', pygame_menu.events.EXIT)
+        
+        menu.mainloop(screen)
+    else:
+        menu = pygame_menu.Menu("Phil's Pong", 400, 300)
+        menu.add.button('Play', play_game)
+        menu.add.button('Quit', pygame_menu.events.EXIT)
+        menu.add.label("Player Left Keys: W/S", font_size=14)
+        menu.add.label("Player Right Keys: UP/DOWN", font_size=14)
+        menu.add.label("Press SPACE TO Pause Game", font_size=12)
+        menu.mainloop(screen)
+menu_options()
+#Once we have exited the main program loop, we can stop the game engine:
 pygame.quit()
